@@ -1,17 +1,10 @@
 import pygame
 import time
 
-black = (0,0,0)
-white = (255,255,255)
-red = (255,0,0)
-green = (0, 255, 0)
+from bird import Bird
+from constants import *
 
-WIDTH = 1000
-HEIGHT = 1000
-
-TIME_STEP_SIZE = 0.5
-
-class Flock(object):
+class Flock:
 
     def __init__(self):
         pygame.init()
@@ -20,8 +13,11 @@ class Flock(object):
         self.clock = pygame.time.Clock()
         self.tick_time = time.time()
 
+        self.birds = [Bird(20, 20, 60)]
+
     def draw(self):
-        pygame.draw.polygon(self.display, black, [[100, 100], [0, 200], [200, 200]], 5)
+        for bird in self.birds:
+            bird.draw(self.display)
 
     def tick(self):
         now = time.time()
