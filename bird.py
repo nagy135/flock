@@ -1,4 +1,5 @@
 import pygame
+
 from constants import *
 
 class Bird:
@@ -9,4 +10,13 @@ class Bird:
         self.angle = angle
 
     def draw(self, display):
-        pygame.draw.polygon(display, black, [[100, 100], [0, 200], [200, 200]], 5)
+        pygame.draw.polygon(
+                display,
+                black,
+                [
+                    [self.x - BIRD_WIDTH, self.y + BIRD_SIZE],
+                    [self.x + BIRD_WIDTH, self.y + BIRD_SIZE],
+                    [self.x, self.y - BIRD_SIZE],
+                    [self.x - BIRD_WIDTH, self.y + BIRD_SIZE]
+                ],
+                2)

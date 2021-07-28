@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 from bird import Bird
 from constants import *
@@ -13,7 +14,15 @@ class Flock:
         self.clock = pygame.time.Clock()
         self.tick_time = time.time()
 
-        self.birds = [Bird(20, 20, 60)]
+        self.birds = []
+        for _ in range(BIRD_COUNT):
+            self.birds.append(
+                    Bird(
+                        random.randint(0, WIDTH),
+                        random.randint(0, HEIGHT),
+                        random.randint(0, 359),
+                        )
+                    )
 
     def draw(self):
         for bird in self.birds:
