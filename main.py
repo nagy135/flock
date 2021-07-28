@@ -35,7 +35,8 @@ class Flock:
             self.move()
 
     def move(self):
-        pass
+        for bird in self.birds:
+            bird.move()
 
     def start(self):
         self.end = False
@@ -54,7 +55,6 @@ class Flock:
             if not pause:
                 self.tick()
             self.display.fill(white)
-            self.tick()
             self.draw()
             pygame.display.update()
             self.clock.tick(60)
