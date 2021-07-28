@@ -1,4 +1,5 @@
 from pygame import gfxdraw
+import pygame
 import math
 
 from constants import *
@@ -15,6 +16,13 @@ class Bird:
         p1 = self.rotate_point_around_center((self.x - BIRD_WIDTH, self.y + BIRD_SIZE))
         p2 = self.rotate_point_around_center((self.x + BIRD_WIDTH, self.y + BIRD_SIZE))
         p3 = self.rotate_point_around_center((self.x, self.y - BIRD_SIZE))
+        pygame.draw.circle(
+                display,
+                red,
+                (self.x, self.y),
+                BIRD_INTERACTION_DISTANCE,
+                1
+                )
         gfxdraw.filled_polygon(
                 display,
                 [p1, p2, p3, p1],

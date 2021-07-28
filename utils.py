@@ -11,3 +11,6 @@ def rotate_point(centerPoint, point, angle):
             )
     temp_point = (temp_point[0]+centerPoint[0], temp_point[1]+centerPoint[1])
     return temp_point
+
+def euclidean_distance(x1, y1, x2, y2):
+    return math.sqrt( (x1 - x2)**2 + (y1 - y2)**2 )
