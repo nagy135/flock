@@ -16,6 +16,12 @@ class Flock:
         self.clock = pygame.time.Clock()
         self.tick_time = time.time()
 
+        self.toggle_interaction_distance = True
+
+        self.toggle_rule_align = True
+        self.toggle_rule_avoid = False
+        self.toggle_rule_center = False
+
         self.birds = []
         for _ in range(BIRD_COUNT):
             self.birds.append(
@@ -28,16 +34,19 @@ class Flock:
 
     def draw(self):
         for bird in self.birds:
-            bird.draw(self.display)
+            bird.draw(self.display, self.toggle_interaction_distance)
 
     def tick(self):
         now = time.time()
         if abs(self.tick_time - now) > TIME_STEP_SIZE:
             self.tick_time = now
 
-            self.rule_align()
-            # self.rule_avoid()
-            # self.rule_center()
+            if self.toggle_rule_align:
+                self.rule_align()
+            if self.toggle_rule_avoid:
+                self.rule_avoid()
+            if self.toggle_rule_center:
+                self.rule_center()
 
             self.move()
 
@@ -79,7 +88,14 @@ class Flock:
                     if event.key == pygame.K_r:
                         self.__init__()
                     if event.key == pygame.K_1:
-                        self.__init__()
+                        self.toggle_rule_align = not self.toggle_rule_align
+                    if event.key == pygame.K_2:
+                        self.toggle_rule_avoid = not self.toggle_rule_avoid
+                    if event.key == pygame.K_3:
+                        self.toggle_rule_center = not self.toggle_rule_center
+
+                    if event.key == pygame.K_4:
+                        self.toggle_interaction_distance = not self.toggle_interaction_distance
                     if event.key == pygame.K_q:
                         self.end = True
                 if event.type == pygame.QUIT:
