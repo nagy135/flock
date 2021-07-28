@@ -6,10 +6,10 @@ green = (0, 255, 0)
 WIDTH = 1000
 HEIGHT = 1000
 
-BIRD_COUNT = 10
-BIRD_SIZE = 15 # size from center to its base (or to the "head")
-BIRD_WIDTH = 5
+BIRD_COUNT = 100
+BIRD_SIZE = 7 # size from center to its base (or to the "head")
+BIRD_WIDTH = 3
 
-STEP_SIZE = 5
+STEP_SIZE = 3
 
-TIME_STEP_SIZE = 0.1
+TIME_STEP_SIZE = 0.01
