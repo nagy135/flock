@@ -27,3 +27,6 @@ class Bird:
     def move(self):
         self.x += math.sin(math.radians(self.angle)) * STEP_SIZE;
         self.y -= math.cos(math.radians(self.angle)) * STEP_SIZE;
+
+        self.x %= WIDTH
+        self.y %= HEIGHT
