@@ -16,6 +16,8 @@ class Flock:
         self.clock = pygame.time.Clock()
         self.tick_time = time.time()
 
+        self.interaction_delta = 0
+
         self.toggle_interaction_distance = False
         self.toggle_bird_debug = False
 
@@ -36,6 +38,8 @@ class Flock:
     def draw(self):
         for bird in self.birds:
             bird.draw(self.display, self)
+        textsurface = BIRD_DEBUG_FONT.render(f"{len(self.birds)}", False, black)
+        self.display.blit(textsurface,(5,5))
 
     def tick(self):
         now = time.time()
@@ -66,6 +70,18 @@ class Flock:
                     bird.angle += ALIGN_DELTA_ANGLE
                 bird.angle %= 360
 
+    def change_flock_size(self, change):
+        if change > 0:
+            for _ in range(change):
+                self.birds.append(
+                        Bird(
+                            random.randint(0, WIDTH),
+                            random.randint(0, HEIGHT),
+                            random.randint(0, 359),
+                            )
+                        )
+        else:
+            self.birds = self.birds[:change]
 
 
     def rule_avoid(self):
@@ -101,6 +117,17 @@ class Flock:
                         self.toggle_bird_debug = not self.toggle_bird_debug
                     if event.key == pygame.K_q:
                         self.end = True
+
+                    if event.key == pygame.K_k:
+                        self.change_flock_size(1)
+                    if event.key == pygame.K_j:
+                        self.change_flock_size(-1)
+
+                    if event.key == pygame.K_h:
+                        self.interaction_delta -= 5
+                    if event.key == pygame.K_l:
+                        self.interaction_delta += 5
+
                 if event.type == pygame.QUIT:
                     self.end = True
             if not pause:

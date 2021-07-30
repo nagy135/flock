@@ -23,7 +23,7 @@ class Bird:
                     display,
                     red,
                     (self.x, self.y),
-                    BIRD_INTERACTION_DISTANCE,
+                    BIRD_INTERACTION_DISTANCE + flock.interaction_delta,
                     1
                     )
         gfxdraw.filled_polygon(
