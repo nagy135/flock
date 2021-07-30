@@ -1,6 +1,7 @@
 from pygame import gfxdraw
 import pygame
 import math
+import random
 
 from constants import *
 from utils import rotate_point
@@ -12,12 +13,12 @@ class Bird:
         self.y = y
         self.angle = angle
 
-    def draw(self, display, interaction_circles):
+    def draw(self, display, flock):
         p1 = self.rotate_point_around_center((self.x - BIRD_WIDTH, self.y + BIRD_SIZE))
         p2 = self.rotate_point_around_center((self.x + BIRD_WIDTH, self.y + BIRD_SIZE))
         p3 = self.rotate_point_around_center((self.x, self.y - BIRD_SIZE))
 
-        if interaction_circles:
+        if flock.toggle_interaction_distance:
             pygame.draw.circle(
                     display,
                     red,
@@ -31,6 +32,10 @@ class Bird:
                 black
                 )
 
+        if flock.toggle_bird_debug:
+            textsurface = BIRD_DEBUG_FONT.render(f"({int(self.x)},{int(self.y)}), °{self.angle}", False, red)
+            display.blit(textsurface,(self.x, self.y - 3))
+
     def rotate_point_around_center(self, point):
         return rotate_point((self.x, self.y), point, self.angle)
 
@@ -40,3 +45,6 @@ class Bird:
 
         self.x %= WIDTH
         self.y %= HEIGHT
+
+        if not random.randint(0, RANDOM_ROTATE_CHANGE - 1):
+            self.angle += random.randint(-RANDOM_ROTATE, RANDOM_ROTATE)
