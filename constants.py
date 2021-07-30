@@ -5,15 +5,16 @@ green = (0, 255, 0)
 
 WIDTH = 1000
 HEIGHT = 1000
+TIME_STEP_SIZE = 0.01 # global tick size
 
 BIRD_COUNT = 200
 BIRD_SIZE = 7 # size from center to its base (or to the "head")
 BIRD_WIDTH = 3
 
-STEP_SIZE = 3
+STEP_SIZE = 3 # pixels to move every tick
+RANDOM_ROTATE = 5 # angle left/right to rotate every tick
 
-TIME_STEP_SIZE = 0.01
+BIRD_INTERACTION_DISTANCE = 50 # bird's sight (red border around with toggle - key 4)
 
-BIRD_INTERACTION_DISTANCE = 50
+ALIGN_DELTA_ANGLE = 15 # angles rotated to align with neighbors
 
-ALIGN_DELTA_ANGLE = 15
