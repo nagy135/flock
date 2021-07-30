@@ -5,7 +5,7 @@ import copy
 
 from bird import Bird
 from constants import *
-from utils import euclidean_distance
+from utils import *
 
 class Flock:
 
@@ -56,18 +56,14 @@ class Flock:
             self.move()
 
     def rule_align(self):
-        copies = copy.deepcopy(self.birds)
         for bird in self.birds:
             angles_in_range = []
-            for bird2 in copies:
+            for bird2 in self.birds:
                 if bird is not bird2 and euclidean_distance(bird.x, bird2.x, bird.y, bird2.y) <= BIRD_INTERACTION_DISTANCE:
                     angles_in_range.append(bird2.angle)
             if angles_in_range:
-                average = sum(angles_in_range) // len(angles_in_range)
-                if bird.angle > average:
-                    bird.angle -= ALIGN_DELTA_ANGLE
-                elif bird.angle < average:
-                    bird.angle += ALIGN_DELTA_ANGLE
+                average = vector_average_angle(angles_in_range)
+                bird.angle = ALIGN_DELTA_ANGLE * two_angles_step_direction(bird.angle, average)
                 bird.angle %= 360
 
     def change_flock_size(self, change):

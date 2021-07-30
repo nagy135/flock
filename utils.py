@@ -46,3 +46,24 @@ def vector_average_angle(array_of_angles):
     if tangle < 0:
         return 360 + tangle
     return tangle
+
+def two_angles_step_direction(a,b):
+    """
+    returns 1 or -1 depending if angle a should be incremented
+    or decremented to get to angle b
+    10, 350 => -1 (we should decrement angles to get to 350)
+    10, 30 => 1 (we should increment angles to get to 30)
+    """
+
+    xa = math.cos(math.radians(a))
+    ya = math.sin(math.radians(a))
+    xb = math.cos(math.radians(b))
+    yb = math.sin(math.radians(b))
+
+    average_x = (xa + xb) / 2
+    average_y = (ya + yb) / 2
+
+    tangle = math.degrees(math.atan2(average_y, average_x))
+    if tangle < 0:
+        return -1
+    return 1
