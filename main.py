@@ -18,8 +18,8 @@ class Flock:
 
         self.interaction_delta = 0
 
-        self.toggle_interaction_distance = False
-        self.toggle_bird_debug = False
+        self.toggle_interaction_distance = True
+        self.toggle_bird_debug = True
 
         self.toggle_rule_align = True
         self.toggle_rule_avoid = False
@@ -56,14 +56,16 @@ class Flock:
             self.move()
 
     def rule_align(self):
-        for bird in self.birds:
+        copies = copy.deepcopy(self.birds)
+        for (i, bird) in enumerate(self.birds):
             angles_in_range = []
-            for bird2 in self.birds:
-                if bird is not bird2 and euclidean_distance(bird.x, bird2.x, bird.y, bird2.y) <= BIRD_INTERACTION_DISTANCE:
+            for (n, bird2) in enumerate(copies):
+                if i != n and euclidean_distance(bird.x, bird.y, bird2.x, bird2.y) <= BIRD_INTERACTION_DISTANCE+self.interaction_delta:
                     angles_in_range.append(bird2.angle)
             if angles_in_range:
                 average = vector_average_angle(angles_in_range)
-                bird.angle = ALIGN_DELTA_ANGLE * two_angles_step_direction(bird.angle, average)
+
+                bird.angle += ALIGN_DELTA_ANGLE * two_angles_step_direction(bird.angle, average)
                 bird.angle %= 360
 
     def change_flock_size(self, change):

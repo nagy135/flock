@@ -8,6 +8,9 @@ from utils import rotate_point
 
 class Bird:
 
+    def __repr__(self):
+        return f"({int(self.x)},{int(self.y)}), °{self.angle}"
+
     def __init__(self, x, y, angle):
         self.x = x
         self.y = y
@@ -46,5 +49,5 @@ class Bird:
         self.x %= WIDTH
         self.y %= HEIGHT
 
-        if not random.randint(0, RANDOM_ROTATE_CHANGE - 1):
-            self.angle += random.randint(-RANDOM_ROTATE, RANDOM_ROTATE)
+        # if not random.randint(0, RANDOM_ROTATE_CHANGE - 1):
+        #     self.angle += random.randint(-RANDOM_ROTATE, RANDOM_ROTATE)
