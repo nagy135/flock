@@ -25,6 +25,9 @@ class Flock:
         self.toggle_rule_avoid = False
         self.toggle_rule_center = False
 
+        self.random_initialization()
+
+    def random_initialization(self):
         self.birds = []
         for _ in range(BIRD_COUNT):
             self.birds.append(
@@ -63,10 +66,19 @@ class Flock:
                 if i != n and euclidean_distance(bird.x, bird.y, bird2.x, bird2.y) <= BIRD_INTERACTION_DISTANCE+self.interaction_delta:
                     angles_in_range.append(bird2.angle)
             if angles_in_range:
-                average = vector_average_angle(angles_in_range)
+                average_x, average_y = vector_average_angle(angles_in_range)
 
-                bird.angle += ALIGN_DELTA_ANGLE * two_angles_step_direction(bird.angle, average)
-                bird.angle %= 360
+                self_x = math.cos(math.radians(bird.angle))
+                self_y = math.sin(math.radians(bird.angle))
+
+                self_x += average_x * ALIGN_CHANGE_CONSTANT
+                self_y += average_y * ALIGN_CHANGE_CONSTANT
+
+                tangle = round(math.degrees(math.atan2(self_y, self_x)))
+                if tangle < 0:
+                    bird.angle = 360 + tangle
+                else:
+                    bird.angle = tangle
 
     def change_flock_size(self, change):
         if change > 0:
@@ -102,6 +114,8 @@ class Flock:
                         pause = not pause
                     if event.key == pygame.K_r:
                         self.__init__()
+                    if event.key == pygame.K_i:
+                        self.random_initialization()
                     if event.key == pygame.K_1:
                         self.toggle_rule_align = not self.toggle_rule_align
                     if event.key == pygame.K_2:

@@ -49,5 +49,5 @@ class Bird:
         self.x %= WIDTH
         self.y %= HEIGHT
 
-        # if not random.randint(0, RANDOM_ROTATE_CHANGE - 1):
-        #     self.angle += random.randint(-RANDOM_ROTATE, RANDOM_ROTATE)
+        if not random.randint(0, RANDOM_ROTATE_CHANGE - 1):
+            self.angle += random.randint(-RANDOM_ROTATE, RANDOM_ROTATE)

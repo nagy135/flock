@@ -42,6 +42,8 @@ def vector_average_angle(array_of_angles):
     average_x /= len(cartesian_coordinates)
     average_y /= len(cartesian_coordinates)
 
+    return average_x, average_y
+
     tangle = round(math.degrees(math.atan2(average_y, average_x)))
     if tangle < 0:
         return 360 + tangle
@@ -67,3 +69,4 @@ def two_angles_step_direction(a,b):
     if tangle < 0:
         return -1
     return 1
+print(vector_average_angle([10,330]))
