@@ -69,4 +69,14 @@ def two_angles_step_direction(a,b):
     if tangle < 0:
         return -1
     return 1
-print(vector_average_angle([10,330]))
+
+
+def move_point_with_angle(x, y, angle, step_size):
+    """
+    Returns new location of point as pair (x,y) moved 
+    step_size far to direction defined by angle
+    """
+    x += math.sin(math.radians(angle)) * step_size;
+    y -= math.cos(math.radians(angle)) * step_size;
+    return x,y
+

@@ -4,7 +4,7 @@ import math
 import random
 
 from constants import *
-from utils import rotate_point
+from utils import rotate_point, move_point_with_angle
 
 class Bird:
 
@@ -43,8 +43,7 @@ class Bird:
         return rotate_point((self.x, self.y), point, self.angle)
 
     def move(self):
-        self.x += math.sin(math.radians(self.angle)) * STEP_SIZE;
-        self.y -= math.cos(math.radians(self.angle)) * STEP_SIZE;
+        self.x,self.y = move_point_with_angle(self.x, self.y, self.angle, STEP_SIZE)
 
         self.x %= WIDTH
         self.y %= HEIGHT
