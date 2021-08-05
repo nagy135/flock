@@ -22,7 +22,7 @@ class Flock:
         self.toggle_bird_debug = False
 
         self.toggle_rule_align = False
-        self.toggle_rule_avoid = False
+        self.toggle_rule_avoid = True
         self.toggle_rule_center = False
 
         self.random_initialization()
@@ -67,6 +67,8 @@ class Flock:
 
             self.move()
 
+    # RULES {{{
+
     def rule_align(self):
         copies = copy.deepcopy(self.birds)
         for (i, bird) in enumerate(self.birds):
@@ -89,6 +91,55 @@ class Flock:
                 else:
                     bird.angle = tangle
 
+
+    def rule_avoid(self):
+        for (i, bird) in enumerate(self.birds):
+            hit = True
+            shift_index = 0
+            original_angle = bird.angle
+            while hit:
+                hit = False
+                for (n, bird2) in enumerate(self.birds):
+                    if i != n and euclidean_distance(bird.x, bird.y, bird2.x, bird2.y) <= BIRD_INTERACTION_DISTANCE+self.interaction_delta:
+                        x1 = bird.x
+                        y1 = bird.y
+                        x2,y2 = move_point_with_angle(x1, y1, bird.angle, 10)
+
+                        # get a,b,c
+                        a = y1 - y2
+                        b = x2 - x1
+                        c = x2 * (y2 - y1) + y2 * (x1 - x2)
+
+                        # aliases for clarity
+                        target_x = bird2.x
+                        target_y = bird2.y
+
+                        # get normal distance
+                        d = math.fabs(a * target_x + b * target_y + c) / 10 
+
+                        # check if we hit this target
+                        if d < BIRD_WIDTH and d > 1:
+                            hit = True
+                            break
+                if hit and shift_index < len(SHIFT_ANGLES):
+                    bird.angle = original_angle + SHIFT_ANGLES[shift_index]
+                    shift_index += 1
+                else:
+                    hit = False
+
+
+
+
+
+    def rule_center(self):
+        pass
+
+    # }}}
+
+    def move(self):
+        for bird in self.birds:
+            bird.move()
+
     def change_flock_size(self, change):
         if change > 0:
             for _ in range(change):
@@ -102,16 +153,6 @@ class Flock:
         else:
             self.birds = self.birds[:change]
 
-
-    def rule_avoid(self):
-        pass
-
-    def rule_center(self):
-        pass
-
-    def move(self):
-        for bird in self.birds:
-            bird.move()
 
     def start(self):
         self.end = False

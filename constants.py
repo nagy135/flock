@@ -9,7 +9,7 @@ WIDTH = 1000
 HEIGHT = 1000
 TIME_STEP_SIZE = 0.001 # global tick size
 
-BIRD_COUNT = 200
+BIRD_COUNT = 120
 BIRD_SIZE = 7 # size from center to its base (or to the "head")
 BIRD_WIDTH = 3
 
@@ -24,3 +24,5 @@ ALIGN_CHANGE_CONSTANT = 0.05 # angles rotated to align with neighbors
 
 pygame.font.init()
 BIRD_DEBUG_FONT = pygame.font.SysFont('Arial', 13)
+
+SHIFT_ANGLES = [((x+1)//2) if x%2==1 else (-x//2) for x in list(range(1,101))]
