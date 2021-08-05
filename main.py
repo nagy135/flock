@@ -18,10 +18,10 @@ class Flock:
 
         self.interaction_delta = 0
 
-        self.toggle_interaction_distance = True
-        self.toggle_bird_debug = True
+        self.toggle_interaction_distance = False
+        self.toggle_bird_debug = False
 
-        self.toggle_rule_align = True
+        self.toggle_rule_align = False
         self.toggle_rule_avoid = False
         self.toggle_rule_center = False
 
@@ -43,6 +43,15 @@ class Flock:
             bird.draw(self.display, self)
         textsurface = BIRD_DEBUG_FONT.render(f"{len(self.birds)}", False, black)
         self.display.blit(textsurface,(5,5))
+
+        textsurface = BIRD_DEBUG_FONT.render(f"Align: {str(self.toggle_rule_align)}", False, black)
+        self.display.blit(textsurface,(WIDTH - 100,10))
+
+        textsurface = BIRD_DEBUG_FONT.render(f"Avoid: {str(self.toggle_rule_avoid)}", False, black)
+        self.display.blit(textsurface,(WIDTH - 100,25))
+
+        textsurface = BIRD_DEBUG_FONT.render(f"Center: {str(self.toggle_rule_center)}", False, black)
+        self.display.blit(textsurface,(WIDTH - 100,40))
 
     def tick(self):
         now = time.time()
